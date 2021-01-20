@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="grid-x">
+        <div class="small-12 cell">
+            <h3>{{task.id}} | {{task.title}}</h3>
+        </div>
+    </div>
+    <div class="grid-x">
+        <div class="small-12 cell">
+            {{task.description}}
+        </div>
+    </div>
+{% endblock %}

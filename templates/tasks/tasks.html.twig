@@ -22,7 +22,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    {% for task in tasks %}
+                        <tr>
+                            <td>
+                                {{task.id}}
+                            </td>
+                            <td>
+                                {{task.title}}
+                            </td>
+                            <td>
+                                <a href="/tasks/{{task.id}}" class="button">View</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
                 <tfoot>
 
