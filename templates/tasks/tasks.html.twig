@@ -17,6 +17,9 @@
                             Title
                         </td>
                         <td>
+                            Categories
+                        </td>
+                        <td>
                             Action
                         </td>
                     </tr>
@@ -29,6 +32,11 @@
                             </td>
                             <td>
                                 {{task.title}}
+                            </td>
+                            <td>
+                                {% for category in task.category %}
+                                    {{category.name}}
+                                {% endfor %}
                             </td>
                             <td>
                                 <a href="/tasks/{{task.id}}" class="button">View</a>

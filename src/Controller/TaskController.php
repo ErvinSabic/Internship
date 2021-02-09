@@ -19,10 +19,10 @@
         }
 
         /**
-        * @Route("/add")
+        * @Route("/modify/{id}", defaults={"id"=0})
         */
-        public function AddAction(Request $request){
-            $task = new Task;
+        public function WhateverYouWant(Request $request, $id){
+            $task = ($id ? $this->getDoctrine()->getRepository("App:Task")->find($id) : new Task);
             $form = $this->createForm(TaskType::class, $task);
             $form->handleRequest($request);
             if($form->isSubmitted() && $form->isValid()){
@@ -33,13 +33,6 @@
             }
 
             return $this->render("tasks/add.html.twig", ["form"=>$form->createView()]);
-        }
-
-        /**
-        * @Route("/edit/{id}")
-        */
-        public function EditAction(Request $request){
-
         }
 
         /**

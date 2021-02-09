@@ -3,11 +3,26 @@
     <div class="grid-x">
         <div class="small-12 cell">
             <h3>{{task.id}} | {{task.title}}</h3>
+            <a href="/tasks/modify/{{task.id}}" class="button">Edit this cool task.</a>
         </div>
     </div>
     <div class="grid-x">
         <div class="small-12 cell">
             {{task.description}}
+        </div>
+    </div>
+    <div class="grid-x">
+        <div class="small-12 cell">
+            {% for category in task.category %}
+                {{category.name}}<br />
+            {% endfor %}
+        </div>
+    </div>
+    <div class="grid-x">
+        <div class="small-12 cell">
+            {% for person in task.people %}
+                {{person.name}}<br />
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

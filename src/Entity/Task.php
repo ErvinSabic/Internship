@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TaskRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,28 @@ class Task
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $due;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="tasks")
+     */
+    private $category;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $complete;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Person::class, inversedBy="tasks")
+     */
+    private $people;
+
+    public function __construct()
+    {
+        $this->category = new ArrayCollection();
+        $this->complete = false;
+        $this->people = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +93,69 @@ class Task
     public function setDue(?\DateTimeInterface $due): self
     {
         $this->due = $due;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategory(): Collection
+    {
+        return $this->category;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->category->contains($category)) {
+            $this->category[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->category->removeElement($category);
+
+        return $this;
+    }
+
+    public function getComplete(): ?bool
+    {
+        return $this->complete;
+    }
+
+    public function setComplete(bool $complete): self
+    {
+        $this->complete = $complete;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Person[]
+     */
+    public function getPeople(): Collection
+    {
+        return $this->people;
+    }
+
+    public function addPerson(Person $person): self
+    {
+        if (!$this->people->contains($person)) {
+            $this->people[] = $person;
+            $person->addTask($this);
+        }
+
+        return $this;
+    }
+
+    public function removePerson(Person $person): self
+    {
+        if ($this->people->removeElement($person)) {
+            $person->removeTask($this);
+        }
 
         return $this;
     }

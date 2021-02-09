@@ -6,7 +6,10 @@
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     use App\Entity\Task;
+    use App\Entity\Person;
+    use App\Entity\Category;
 
     class TaskType extends AbstractType {
         public function buildForm(FormBuilderInterface $builder, array $options){
@@ -19,6 +22,20 @@
                 ])
                 ->add("due", DateTimeType::Class, [
                     'label'=>"Due Date"
+                ])
+                ->add("category", EntityType::Class, [
+                    'label'=>'Category',
+                    'class'=>Category::Class,
+                    'choice_label'=>"name",
+                    'multiple'=>true,
+                    "required"=>false
+                ])
+                ->add("people", EntityType::Class, [
+                    "label"=>"Assigned",
+                    "class"=>Person::Class,
+                    'choice_label'=>"name",
+                    "multiple"=>true,
+                    "required"=>false
                 ])
                 ->add("submit", SubmitType::Class, [
                     'label'=>'Submit',
